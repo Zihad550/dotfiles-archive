@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+ARCH_DESKTOP="${ARCH_DESKTOP:-$HOME/arch-desktop}"
+cd "$ARCH_DESKTOP"
+
+mkdir -p ~/.config
+ln -snf "$ARCH_DESKTOP/portable/git/.config/git" ~/.config/git
+# ln -snf "$ARCH_DESKTOP/portable/lazygit/.config/lazygit" ~/.config/lazygit
+
+# stow mise — only seed a missing file; see scripts/stow/stow-base
+mkdir -p ~/.config/mise
+if [[ ! -e ~/.config/mise/config.toml ]]; then
+    cp "${DOTFILES_DIR:-$HOME/dotfiles}/mise/.config/mise/config.toml" ~/.config/mise/config.toml
+fi
+
+# only config.toml is managed; the rest is runtime state (approvals, locks)
+mkdir -p ~/.config/worktrunk
+ln -snf "$ARCH_DESKTOP/portable/worktrunk/.config/worktrunk/config.toml" ~/.config/worktrunk/config.toml
+
+rm -rf ~/.bashrc
+ln -snf "${DOTFILES_DIR:-$HOME/dotfiles}/bash/.bashrc" ~/.bashrc
+ln -snf "${DOTFILES_DIR:-$HOME/dotfiles}/zsh/.config/zsh" ~/.config/zsh
+ln -snf "${DOTFILES_DIR:-$HOME/dotfiles}/zsh/.zshenv" ~/.zshenv
+
+mkdir -p ~/.config/procs
+ln -snf "${DOTFILES_DIR:-$HOME/dotfiles}/procs/.config/procs" ~/.config/procs
+
+# ai tools
+portable/scripts/stow/stow-ai

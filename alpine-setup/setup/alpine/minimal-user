@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# stow
+ARCH_DESKTOP="${ARCH_DESKTOP:-$HOME/arch-desktop}"
+cd "$ARCH_DESKTOP" || exit
+
+stow --no-folding --dir "${DOTFILES_DIR:-$HOME/dotfiles}" --target "$HOME" git
+mkdir -p ~/.config/opencode
+ln -snf "$ARCH_DESKTOP/portable/opencode/.config/opencode/agent" ~/.config/opencode/agent
+ln -snf "$ARCH_DESKTOP/portable/opencode/.config/opencode/command" ~/.config/opencode/command
+ln -snf "$ARCH_DESKTOP/portable/opencode/.config/opencode/plugin" ~/.config/opencode/plugin
+ln -snf "$ARCH_DESKTOP/portable/opencode/.config/opencode/AGENTS.md" ~/.config/opencode/AGENTS.md
+ln -snf "$ARCH_DESKTOP/portable/opencode/.config/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
+ln -snf "$ARCH_DESKTOP/portable/opencode/.config/opencode/tui.json" ~/.config/opencode/tui.json
+stow --no-folding --dir "${DOTFILES_DIR:-$HOME/dotfiles}" --target "$HOME" zsh # to get the aliasrc file
+rm -rf ~/.bashrc
+stow --no-folding --dir "${DOTFILES_DIR:-$HOME/dotfiles}" --target "$HOME" bash
+mkdir -p ~/.config/herdr
+ln -snf "$ARCH_DESKTOP/portable/herdr/.config/herdr/config.toml" ~/.config/herdr/config.toml
+# Only seed a missing mise config; see scripts/stow/stow-base
+mkdir -p ~/.config/mise
+if [[ ! -e ~/.config/mise/config.toml ]]; then
+    cp "$ARCH_DESKTOP/portable/mise/.config/mise/config.toml" ~/.config/mise/config.toml
+fi
+
+mkdir -p ~/dev
+
+mise use -g usage
+
+"$ARCH_DESKTOP/setup/common/setup-herdr"
+
+echo "now logout and log back in"
