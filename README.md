@@ -13,6 +13,7 @@ keeps the files' original repository paths, so scripts still name paths such as
 | `arch-gnome-setup/` | GNOME on Arch, and its removal. |
 | `devcontainer/` | The DevPod devcontainer image, its dotfile links, and the `devup` shell function. |
 | `fedora-setup/` | The Fedora workstation target. |
+| `gh-dash/` | The gh-dash GitHub dashboard: its config (dotfiles `gh-dash/`) and arch-devbox's `setup-github-cli`, which only installed it. |
 | `herdr-notification-toggle/` | `df-herdr-toggle-notifications` and its test: Herdr's `prefix+comma` key rewrote `[ui.toast]` and `[ui.sound]` in its config and reloaded the server. |
 | `rofi-launcher-predecessor/` | The rofi launcher and its scripts, replaced by the Quickshell launcher. |
 | `rootful-docker/` | Rootful Docker and its UFW rules, replaced by rootless Docker (#95). |
